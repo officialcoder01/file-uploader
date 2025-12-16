@@ -4,10 +4,6 @@ const { check, validationResult } = require('express-validator');
 const streamifier = require('streamifier');
 const cloudinary = require('../config/cloudinary');
 const query = require('../queries/file');
-const path = require('path');
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit
 
