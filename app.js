@@ -64,10 +64,15 @@ app.use('/folders', folderRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000
-app.listen(PORT, (error) => {
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, (error) => {
     if (error) {
-        console.error('Error starting the server:', error);
+      console.error('Error starting the server:', error);
     } else {
-        console.log(`Server is running on port ${PORT}`);
+      console.log(`Server is running on port ${PORT}`);
     }
-});
+  });
+}
+
+module.exports = app;
