@@ -4,7 +4,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "postinstall": "prisma generate",
+    "build": "npm run postinstall"
   },
   "keywords": [],
   "author": "",
