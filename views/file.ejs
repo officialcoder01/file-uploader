@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Files</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/fileStyle.css" />
+</head>
+<body>
+    <%- include('navbar', { user: user }) %>
+    <div class="container filesPage">
+        <div class="filesHeader">
+            <h2>Files</h2>
+            <div class="headerActions">
+                <a class="btn primary" href="/files/upload">+ New File</a>
+                <a class="btn" href="/folders">Browse Folders</a>
+            </div>
+        </div>
+
+        <% if (!files || files.length === 0) { %>
+            <div class="emptyState">
+                No files found. Click "New File" to upload one.
+            </div>
+        <% } else { %>
+            <div class="filesGrid">
+                <% files.forEach(function(file) { 
+                    var filename = file.name;
+                    var folderName = (file.folder && file.folder.name) || 'Root';
+                    var created = file.createdAt;
+                    var createdStr = created ? created.toLocaleString() : 'Unknown';
+                    function formatBytes(bytes) {
+                        if (!bytes && bytes !== 0) return '';
+                        if (bytes === 0) return '0 B';
+                        var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                        var i = Math.floor(Math.log(bytes) / Math.log(1024));
+                        return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+                    }
+                %>
+                <div class="fileCard" data-href="/files/<%= file.id %>">
+                    <div class="fileTop">
+                        <div class="fileIcon"><i class="fas fa-file"></i></div>
+                        <div class="fileMeta">
+                            <div class="fileName" title="<%= filename %>"><%= filename %></div>
+                            <div class="fileSmall">
+                                <span><%= formatBytes(file.size) %></span>
+                                <span> • </span>
+                                <span><%= createdStr %></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fileCenter">
+                        <div class="folderTag"><i class="fas fa-folder"></i> <%= folderName %></div>
+                    </div>
+
+                    <div class="fileBottom">
+                        <a class="viewDetail action" href="/files/<%= file.id %>">View Detail</a>
+
+                        <div class="fileActions">
+                            <a class="action btn small" href="/files/<%= file.id %>/download" download>Download</a>
+                            <form class="action deleteForm" method="POST" action="/files/<%= file.id %>/delete" onsubmit="return confirm('Delete this file?');">
+                                <button class="btn small danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+<script>
+    // Make the whole card clickable but ignore clicks on action elements
+    document.addEventListener('click', function (e) {
+        var card = e.target.closest('.fileCard');
+        if (!card) return;
+        // If click was on an action (link/form/button) then do nothing here
+        if (e.target.closest('.action')) return;
+        var href = card.getAttribute('data-href');
+        if (href) window.location = href;
+    });
+</script>
+</body>
+</html>

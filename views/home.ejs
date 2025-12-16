@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/homeStyle.css">
+</head>
+<body>
+    <%- include('navbar', { user: user }) %>
+    <div class="container">
+        <h1>Welcome to Uploadium</h1>
+        <p class="firstParagraph">Securely upload, manage, and share your files</p>
+        <div class="authContainer">
+            <% if (!user) { %>
+                <div class="signup">
+                    <p class="topText">New Here?</p>
+                    <p>Create an account to start uploading and managing your files securely</p>
+                    <a href="/signup" class="signButton">Register</a>
+                </div>
+                <div class="login">
+                    <p class="topText">Already Have an Account?</p>
+                    <p>Sign in to access your files and upload new ones</p>
+                    <a href="/login" class="loginButton">Login</a>
+                </div>
+            <% } else { %>
+                <div class="signup">
+                    <p class="topText">Upload files</p>
+                    <p>Upload your documents, images, and other files securely</p>
+                    <a href="/files/upload" class="signButton">Upload Now</a>
+                </div>
+                <div class="login">
+                    <p class="topText">Manage your files</p>
+                    <p>Access, organize, and share your uploaded files easily</p>
+                    <a href="/files" class="loginButton">My Files</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

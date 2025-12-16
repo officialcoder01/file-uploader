@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Folders</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/folderStyle.css" />
+</head>
+<body>
+  <%- include('navbar', { user: user }) %>
+
+  <div class="folders-page">
+    <div class="topbar">
+      <h1>Folders</h1>
+      <div class="actions">
+        <a href="/folders/new" class="btn btn-primary">+ New Folder</a>
+        <a href="/files/upload" class="btn btn-secondary">Upload File</a>
+      </div>
+    </div>
+
+    <% if (!folders || folders.length === 0) { %>
+      <div class="empty-state">
+        <div class="empty-card">
+          <h2>No folders yet</h2>
+          <p>Create folders to organize your files.</p>
+          <a href="/folders/new" class="btn btn-primary large">Create Folder</a>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="folders-grid">
+        <% folders.forEach((folder) => { %>
+          <div class="folder-card" data-id="<%= folder.id %>">
+            <div class="card-top">
+              <div class="folder-meta">
+                <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                <div class="folder-title">
+                  <div class="name"><%= folder.name %></div>
+                </div>
+              </div>
+
+              <div class="card-controls">
+                <button class="dot-btn" aria-label="options">⋯</button>
+                <div class="menu">
+                  <a class="menu-item" href="/folders/<%= folder.id %>/edit">Edit</a>
+                  <a class="menu-item" href="/folders/<%= folder.id %>/share">Share</a>
+                  <form class="menu-item delete-form" action="/folders/<%= folder.id %>/delete" method="POST" onsubmit="return confirm('Delete folder & all contents?');">
+                    <button type="submit" class="menu-delete">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <p class="folder-desc"><%= folder.description || '' %></p>
+            </div>
+
+            <a class="view-arrow" href="/folders/<%= folder.id %>" title="Open folder">Open➜</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <script>
+    (function() {
+      // toggle menu per-card
+      document.querySelectorAll('.dot-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const menu = this.nextElementSibling;
+          // close other menus
+          document.querySelectorAll('.menu').forEach(function(m) {
+            if (m !== menu) m.classList.remove('open');
+          });
+          menu.classList.toggle('open');
+        });
+      });
+
+      // close menus when clicking outside
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.menu.open').forEach(function(m) { m.classList.remove('open'); });
+      });
+
+      // prevent clicks inside menu from closing
+      document.querySelectorAll('.menu').forEach(function(menu) {
+        menu.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

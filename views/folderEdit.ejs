@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Folder</title>
+    <link rel="stylesheet" href="/folderformStyle.css">
+</head>
+<body>
+    <%- include('navbar', { user: user }) %>
+
+    <div class="container folder-card">
+        <h2>Edit Folder</h2>
+
+        <form action="/folders/<%= folderId %>/edit" method="POST" id="editFolderForm">
+            <label for="name">Folder Name</label>
+            <input id="name" name="name" type="text" value="<%= folder.name %>" required />
+
+            <p class="muted">Folder names should be short and descriptive.</p>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+document.getElementById('cancelBtn').addEventListener('click', function () {
+    window.location.href = '/folders';
+});
+</script>
+</body>
+</html>

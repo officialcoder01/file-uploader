@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="/fileformStyle.css">
+</head>
+<body>
+    <%- include('navbar', { user: user }) %>
+
+    <div class="container file-card">
+        <h2>Upload File</h2>
+
+        <form action="/files/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <label class="dropzone" id="dropzone">
+                <input type="file" name="file" id="fileInput" required>
+                <div class="drop-content">
+                    <p id="dropText">Drag & drop a file here, or click to choose</p>
+                    <p class="muted" id="fileName"></p>
+                </div>
+            </label>
+
+            <div class="folder-select">
+                <% if (typeof folders !== 'undefined' && folders && folders.length > 0) { %>
+                    <label for="folderId">Choose folder (optional)</label>
+                    <select name="folderId" id="folderId">
+                        <option value="" <%= !folderId ? 'selected' : '' %>>-- Upload to root (no folder) --</option>
+                        <% folders.forEach(function(folder) { %>
+                            <option value="<%= folder.id %>" <%= String(folder.id) === String(folderId) ? 'selected' : '' %>><%= folder.name %></option>
+                        <% }) %>
+                    </select>
+                <% } else { %>
+                    <p class="no-folders">You have no folders yet. Files will be uploaded to your main area. Create a folder first to organize uploads.</p>
+                <% } %>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Upload</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+(function () {
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const dropText = document.getElementById('dropText');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    function updateFileName(file) {
+        if (!file) {
+            fileName.textContent = '';
+            dropText.style.display = '';
+        } else {
+            fileName.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+            dropText.style.display = 'none';
+        }
+    }
+
+    fileInput.addEventListener('change', (e) => {
+        updateFileName(e.target.files[0]);
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        const dtFiles = e.dataTransfer.files;
+        if (dtFiles && dtFiles.length) {
+            fileInput.files = dtFiles;
+            updateFileName(dtFiles[0]);
+        }
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        window.location.href = '/files';
+    });
+})();
+</script>
+</body>
+</html>

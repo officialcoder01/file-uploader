@@ -1,0 +1,90 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Folder — <%= folder && folder.name ? folder.name : 'Folder' %></title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/fileStyle.css" />
+	<link rel="stylesheet" href="/folderdetailStyle.css" />
+</head>
+<body>
+	<%- include('navbar', { user: user }) %>
+
+	<div class="container filesPage">
+		<div class="filesHeader">
+			<h2>Folder: <%= folder.name %></h2>
+			<div class="headerActions">
+				<a class="btn primary" href="/files/upload?folderId=<%= folder.id %>">+ Upload File</a>
+				<a class="btn" href="/folders">Back to Folders</a>
+				<form method="POST" action="/folders/<%= folder.id %>/delete" style="display:inline;" onsubmit="return confirm('Delete this folder and its files?');">
+					<button class="btn danger" type="submit">Delete Folder</button>
+				</form>
+			</div>
+		</div>
+
+		<% if (!folder.files || folder.files.length === 0) { %>
+			<div class="emptyState">
+				This folder is empty. Use "Upload File" to add files.
+			</div>
+		<% } else { %>
+			<div class="filesGrid">
+				<% folder.files.forEach(function(file) { 
+					var filename = file.name;
+					var created = file.createdAt;
+					var createdStr = created ? created.toLocaleString() : 'Unknown';
+					function formatBytes(bytes) {
+						if (!bytes && bytes !== 0) return '';
+						if (bytes === 0) return '0 B';
+						var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+						var i = Math.floor(Math.log(bytes) / Math.log(1024));
+						return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+					}
+				%>
+				<div class="fileCard" data-href="/files/<%= file.id %>">
+					<div class="fileTop">
+						<div class="fileIcon"><i class="fas fa-file"></i></div>
+						<div class="fileMeta">
+							<div class="fileName" title="<%= filename %>"><%= filename %></div>
+							<div class="fileSmall">
+								<span><%= formatBytes(file.size) %></span>
+								<span> • </span>
+								<span><%= createdStr %></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="fileCenter">
+						<div class="folderTag"><i class="fas fa-user"></i> <%= file.user ? file.user.name : 'Uploaded' %></div>
+					</div>
+
+					<div class="fileBottom">
+						<a class="viewDetail action" href="/files/<%= file.id %>">View Detail</a>
+
+						<div class="fileActions">
+							<a class="action btn small" href="<%= file.url %>" target="_blank" title="Open">View</a>
+							<a class="action btn small" href="<%= file.url %>" download title="Download">Download</a>
+							<form class="action deleteForm" method="POST" action="/files/<%= file.id %>/delete" onsubmit="return confirm('Delete this file?');">
+								<button class="btn small danger" type="submit">Delete</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<% }) %>
+			</div>
+		<% } %>
+	</div>
+
+<script>
+	document.addEventListener('click', function (e) {
+		var card = e.target.closest('.fileCard');
+		if (!card) return;
+		if (e.target.closest('.action')) return;
+		var href = card.getAttribute('data-href');
+		if (href) window.location = href;
+	});
+</script>
+</body>
+</html>
+

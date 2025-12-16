@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/navStyle.css">
+</head>
+<body>
+<nav>
+    <a href="/" class="logo">Uploadium</a>
+    <ul>
+        <% if (user) { %>
+            <li><a href="/folders"><i class="fas fa-folder"></i> Folders</a></li>
+            <li><a href="/files"><i class="fas fa-file"></i> Files</a></li>
+            <li><i class="fas fa-user"></i> <%= user.name %></li>
+            <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <% } else { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        <% } %>
+    </ul>
+</nav>
+</body>
+</html>

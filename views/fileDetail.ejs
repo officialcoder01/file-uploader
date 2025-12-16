@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>File Detail</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/filedetailStyle.css" />
+</head>
+<body>
+    <%- include('navbar', { user: user }) %>
+
+    <div class="container fileDetailPage">
+        <div class="detailHeader">
+            <h2>File Detail</h2>
+            <div class="topActions">
+                <a class="btn" href="/files/<%= file.id %>/download" download><i class="fas fa-download"></i> Download</a>
+                <form method="POST" action="/files/<%= file.id %>/delete" onsubmit="return confirm('Delete this file?');">
+                    <button type="submit" class="btn danger"><i class="fas fa-trash"></i> Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="detailBody">
+            <div class="preview">
+                <% if (file.mimeType && file.mimeType.startsWith('image')) { %>
+                    <img src="<%= file.previewUrl %>" alt="<%= file.name %>" class="fileImage" />
+                <% } else if (file.mimeType && file.mimeType.includes('pdf')) { %>
+                    <img src="<%= file.previewUrl %>" class="fileImage" alt="PDF Preview"></img>
+                <% } else { %>
+                    <div class="filePlaceholder">
+                        <div class="fileIconLarge"><i class="fas fa-file"></i></div>
+                        <a class="btn" href="/files/<%= file.id %>/download" download>Download</a>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="meta">
+                <div class="metaRow">
+                    <div class="metaLabel">Name</div>
+                    <div class="metaValue"><%= file.name %></div>
+                </div>
+
+                <div class="metaRow">
+                    <div class="metaLabel">Size</div>
+                    <div class="metaValue">
+                        <% function formatBytes(bytes) {
+                            if (bytes === 0) return '0 B';
+                            if (!bytes) return '';
+                            const sizes = ['B','KB','MB','GB','TB'];
+                            const i = Math.floor(Math.log(bytes) / Math.log(1024));
+                            return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+                        } %>
+                        <%= formatBytes(file.size) %>
+                    </div>
+                </div>
+
+                <div class="metaRow">
+                    <div class="metaLabel">Type</div>
+                    <div class="metaValue"><%= file.mimeType %></div>
+                </div>
+
+                <div class="metaRow">
+                    <div class="metaLabel">Created</div>
+                    <div class="metaValue"><%= new Date(file.createdAt).toLocaleString() %></div>
+                </div>
+
+                <div class="metaRow">
+                    <div class="metaLabel">Folder</div>
+                    <div class="metaValue"><%= (file.folder && file.folder.name) ? file.folder.name : 'Root' %></div>
+                </div>
+
+                <div class="metaRow">
+                    <div class="metaLabel">Owner</div>
+                    <div class="metaValue"><%= (file.user && (file.user.name || file.user.email)) ? (file.user.name || file.user.email) : (user && (user.name || user.email)) %></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
