@@ -1,0 +1,96 @@
+/* Styles for folderDetail view — complements fileStyle.css
+   Reuses the same card/button system and adjusts spacing for folder context */
+
+.container.filesPage {
+	margin: 80px auto 40px auto;
+	max-width: 1100px;
+	padding: 20px;
+}
+
+.filesHeader h2 {
+	color: #0f1d25;
+	font-size: 26px;
+	font-weight: 700;
+}
+
+.filesHeader .headerActions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Folder info block (above grid) */
+.folderInfo {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 12px;
+}
+
+.folderAvatar {
+	width: 56px;
+	height: 56px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg,#fff,#eef7ff);
+	border: 1px solid rgba(15,29,37,0.03);
+	font-size: 22px;
+	color: #0f1d25;
+}
+
+.folderMeta {
+	display:flex;
+	flex-direction:column;
+}
+
+.folderMeta .muted {
+	color: #6b7280;
+	font-size: 13px;
+}
+
+/* reuse the .filesGrid and .fileCard from fileStyle but add subtle differences */
+.filesGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 18px;
+}
+
+.fileCard {
+	background: #ffffff;
+	border-radius: 12px;
+	padding: 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 140px;
+	box-shadow: 0 6px 18px rgba(16,25,30,0.04);
+	border: 1px solid rgba(15,29,37,0.04);
+	transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.fileCard:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(16,25,30,0.08); }
+
+.fileIcon { font-size: 34px; width:56px; height:56px; }
+
+.fileName { font-size: 15px; color:#0f1d25; font-weight:600; }
+
+.fileSmall { color:#6b7280; font-size:13px; margin-top:6px; }
+
+.folderTag { background: rgba(15,29,37,0.03); padding:6px 10px; border-radius:8px; font-size:13px; }
+
+.fileBottom { display:flex; justify-content:space-between; align-items:center; margin-top:12px; }
+
+/* Buttons - keep consistent with fileStyle but ensure spacing */
+.btn { padding:8px 12px; border-radius:8px; font-weight:600; }
+.btn.small { padding:6px 8px; font-size:13px; }
+.btn.danger, button.btn.danger { background:#ffdfe0; color:#9b1c2a; border:1px solid rgba(155,28,42,0.08); }
+
+.emptyState { padding:40px; text-align:center; border-radius:12px; background:#fbfbfb; border:1px dashed rgba(15,29,37,0.04); color:#555; }
+
+/* Responsive */
+@media (max-width:700px) {
+	.filesHeader { flex-direction:column; align-items:flex-start; gap:12px; }
+	.folderInfo { flex-direction:column; align-items:flex-start; gap:8px; }
+}

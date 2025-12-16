@@ -1,0 +1,114 @@
+/* File detail page styles — aligned with project palette */
+.container.fileDetailPage {
+    max-width: 1100px;
+    margin: 84px auto 40px;
+    padding: 20px;
+}
+
+.detailHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.detailHeader h2 {
+    font-size: 24px;
+    color: #0f1d25;
+    font-weight: 700;
+}
+
+.topActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.detailBody {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 20px;
+    align-items: start;
+}
+
+.preview {
+    background: #f7f9fb;
+    border-radius: 12px;
+    padding: 18px;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(15,29,37,0.04);
+}
+
+.fileImage {
+    max-width: 100%;
+    max-height: 740px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.fileFrame {
+    width: 100%;
+    height: 700px;
+    border: none;
+}
+
+.filePlaceholder {
+    text-align: center;
+    color: #374151;
+}
+
+.fileIconLarge {
+    font-size: 72px;
+    width: 120px;
+    height: 120px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(180deg,#fff 0%,#eef7ff 100%);
+    border: 1px solid rgba(15,29,37,0.03);
+    margin-bottom: 12px;
+}
+
+.meta {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid rgba(15,29,37,0.04);
+    box-shadow: 0 6px 18px rgba(16,25,30,0.03);
+}
+
+.metaRow { display:flex; gap:12px; align-items:center; margin-bottom:14px; }
+.metaLabel { width: 90px; color:#6b7280; font-size:13px; }
+.metaValue { color:#0f1d25; font-weight:600; word-break:break-all; }
+
+.btn {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    background: #eef6ff;
+    color: #0f1d25;
+    display: inline-flex;
+    gap:8px;
+    align-items:center;
+}
+
+.btn.danger, button.btn.danger {
+    background: #ffdfe0;
+    color: #9b1c2a;
+    border: 1px solid rgba(155,28,42,0.08);
+}
+
+@media (max-width: 900px) {
+    .detailBody { grid-template-columns: 1fr; }
+    .fileFrame { height: 420px; }
+    .preview { min-height: 320px; }
+    .container.fileDetailPage { padding: 12px; }
+}

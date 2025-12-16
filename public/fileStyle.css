@@ -1,0 +1,182 @@
+/* File grid and card styles — integrates with the existing project palette */
+.container.filesPage {
+    margin: 80px auto 40px auto; /* account for fixed nav */
+    max-width: 1200px;
+    padding: 20px;
+    background: transparent;
+}
+
+.filesHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.filesHeader h2 {
+    color: #0f1d25;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.headerActions .btn {
+    margin-left: 10px;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid rgba(15,29,37,0.06);
+    background: #eef6ff;
+    color: #0f1d25;
+}
+
+.headerActions .btn.primary {
+    background: #0f7bfd;
+    color: white;
+}
+
+.filesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+/* Card */
+.fileCard {
+    background: #f7f9fb;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+    box-shadow: 0 6px 18px rgba(16, 25, 30, 0.06);
+    border: 1px solid rgba(15,29,37,0.04);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.fileCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(16,25,30,0.10);
+}
+
+.fileTop {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.fileIcon {
+    font-size: 36px;
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ffffff 0%, #eef7ff 100%);
+    border: 1px solid rgba(15,29,37,0.03);
+    color: #0f1d25;
+}
+
+.fileMeta {
+    flex: 1;
+    min-width: 0;
+}
+
+.fileName {
+    font-size: 16px;
+    color: #0f1d25;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fileSmall {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.fileCenter {
+    margin-top: 10px;
+    color: #374151;
+    font-size: 13px;
+}
+
+.folderTag {
+    background: rgba(15,29,37,0.03);
+    display: inline-block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* Bottom row with view detail and actions */
+.fileBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.viewDetail {
+    color: #0f1d25;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.fileActions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    background: #eef6ff;
+    color: #0f1d25;
+}
+
+.btn.small {
+    padding: 6px 8px;
+    font-size: 13px;
+}
+
+.btn.danger,
+button.btn.danger {
+    background: #ffdfe0;
+    color: #9b1c2a;
+    border: 1px solid rgba(155,28,42,0.08);
+}
+
+/* Empty state */
+.emptyState {
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    background: #fbfbfb;
+    border: 1px dashed rgba(15,29,37,0.04);
+    color: #555;
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+    .filesHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .headerActions { display:flex; }
+}
