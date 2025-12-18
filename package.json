@@ -2,11 +2,13 @@
   "name": "file-uploader",
   "version": "1.0.0",
   "main": "app.js",
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "postinstall": "prisma generate",
-    "build": "npm run postinstall"
+    "build": "prisma generate --schema=prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
