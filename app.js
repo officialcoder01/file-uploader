@@ -4,6 +4,7 @@ const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const { PrismaClient } = require('@prisma/client');
 const { PrismaPg } = require('@prisma/adapter-pg');
 const passport = require('passport');
+const cors = require('cors');
 const path = require('node:path');
 const flash = require('connect-flash');
 const authRouter = require('./routes/authRouter');
@@ -13,6 +14,8 @@ const folderRouter = require('./routes/folderRouter');
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
