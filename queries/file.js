@@ -26,7 +26,17 @@ const getAllfilesByUserId = async (userId) => {
 const getFileById = async (fileId) => {
     return await prisma.file.findUnique({
         where: { id: Number(fileId) },
-        include: { folder: true, user: true },
+        include: {
+            folder: true,
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                },
+            }
+
+        },
     });
 };
 
